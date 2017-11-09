@@ -5,3 +5,7 @@
 	<input type="email" placeholder="Email" name="email" required>
 	<input type="submit" value="Enviar">
 </form>
+<?php
+$registro = new MvcController();
+$registro->registroUsuariosController();
+?>
