@@ -8,4 +8,10 @@
 <?php
 $registro = new MvcController();
 $registro->registroUsuariosController();
+
+if (isset($_GET["action"])){
+    if($_GET["action"] == "ok"){
+        echo "Registro Exitoso";
+    }
+}
 ?>

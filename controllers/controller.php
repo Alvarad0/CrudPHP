@@ -25,7 +25,11 @@ class MvcController
         if(isset($_POST["usuario"])){
             $datosController = array("usuario" => $_POST["usuario"],"password" => $_POST["password"],"email" => $_POST["email"]);
             $respuesta = (new Datos)->registroUsuarioModel($datosController, "usuarios");
-            echo $respuesta;
+            if($respuesta == "Success"){
+                header("location:index.php?action=ok");
+            }else{
+                header("location:index.php");
+            }
         }
     }
 }
