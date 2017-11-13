@@ -23,3 +23,11 @@ if(!$_SESSION["validar"]){
         ?>
 		</tbody>
 	</table>
+
+<?php
+    if(isset($_GET["action"])){
+        if($_GET["action"] == "cambio"){
+            echo "Cambio realizado Exitosamente";
+        }
+    }
+?>

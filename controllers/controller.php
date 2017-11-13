@@ -59,9 +59,39 @@ class MvcController
 				<td>'.$item["usuario"].'</td>
 				<td>'.$item["password"].'</td>
 				<td>'.$item["email"].'</td>
-				<td><button>Editar</button></td>
+				<td><a href="index.php?action=editar&id='.$item["id"].'"><button>Editar</button></a></td>
 				<td><button>Borrar</button></td>
 			</tr>';
+        }
+    }
+
+    #Editar Usuario
+    public function editarUsuarioController(){
+        $datosController = $_GET["id"];
+        //echo $datosController;
+        $respuesta =  (new Datos)->editarUsuarioModel($datosController, "Usuarios");
+        echo $respuesta = '
+            <input type="hidden" name="idEditar" value="'.$datosController.'" required>
+            <input type="text" name="usuarioEditar" value="'.$respuesta["usuario"].'" required>
+            <input type="email" name="emailEditar" value="'.$respuesta["email"].'" required>
+            <input type="text" name="passwordEditar" value="'.$respuesta["password"].'" required>
+            <input type="submit" value="Actualizar">';
+    }
+
+    #Actualizar Usuario
+    public function actualizarUsuarioController(){
+        if (isset($_POST["usuarioEditar"])) {
+            $datosController = array(
+                "id" => $_POST["idEditar"],
+                "usuario" => $_POST["usuarioEditar"],
+                "password" => $_POST["passwordEditar"],
+                "email" => $_POST["emailEditar"]);
+            $respuesta = (new Datos)->actualizarusuarioModel($datosController, "usuarios");
+            if ($respuesta == "success") {
+                header("location: index.php?action=cambio");
+            }else{
+                echo "Error";
+            }
         }
     }
 }
