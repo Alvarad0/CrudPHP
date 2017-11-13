@@ -21,4 +21,19 @@ class Datos extends Conexion {
         return "Error";
     }
     }
+
+    #Ingreso Usuario
+    public function ingresoUsuarioModel($datosModel, $tabla){
+        $stmt = (new Conexion)->conectar()->prepare("SELECT usuario, password FROM $tabla WHERE  usuario = :usuario");
+        $stmt->bindParam(":usuario", $datosModel["usuario"], PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
+    #Vista Usuarios
+    public function vistaUsuariosModel($tabla){
+        $stmt = (new Conexion)->conectar()->prepare("SELECT * FROM $tabla");
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
 }

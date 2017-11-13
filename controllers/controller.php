@@ -32,6 +32,36 @@ class MvcController
             }
         }
     }
+
+    #Ingreso de Usuarios
+    public function ingresoUsuarioController(){
+        if (isset($_POST["usuarioLogin"])) {
+            $datosController = array("usuario" => $_POST["usuarioLogin"], "password" => $_POST["passwordLogin"]);
+            $respuesta = (new Datos)->ingresoUsuarioModel($datosController, "usuarios");
+            //var_dump($respuesta);
+            if ($respuesta["usuario"] == $_POST["usuarioLogin"] && $respuesta["password"] == $_POST["passwordLogin"]) {
+                header("location:index.php?action=usuarios");
+            }else{
+                header("location:index.php?action=fallo");
+            }
+
+        }
+    }
+
+    #Vista Usuarios
+    public function vistaUsuarioController(){
+        $respuesta = (new Datos)->vistaUsuariosModel("usuarios");
+        //var_dump($respuesta[3][1]);
+        foreach ($respuesta as $row => $item) {
+            echo '<tr>
+				<td>'.$item["usuario"].'</td>
+				<td>'.$item["password"].'</td>
+				<td>'.$item["email"].'</td>
+				<td><button>Editar</button></td>
+				<td><button>Borrar</button></td>
+			</tr>';
+        }
+    }
 }
 
 
