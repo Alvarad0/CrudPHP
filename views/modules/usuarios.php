@@ -1,3 +1,9 @@
+<?php
+session_start();
+if(!$_SESSION["validar"]){
+    header("location:index.php?action=ingresar");
+}
+?>
 <h1>USUARIOS</h1>
 	<table border="1">
 		<thead>
