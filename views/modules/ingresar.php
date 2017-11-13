@@ -12,5 +12,6 @@ if (isset($_GET["action"])) {
     if ($_GET["action"] == "fallo") {
         echo "Usuario ó Contraseña Incorrectos";
     }
+    exit();
 }
 ?>

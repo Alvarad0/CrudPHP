@@ -20,6 +20,7 @@ class Datos extends Conexion {
     else{
         return "Error";
     }
+    $stmt->close();
     }
 
     #Ingreso Usuario
@@ -28,6 +29,7 @@ class Datos extends Conexion {
         $stmt->bindParam(":usuario", $datosModel["usuario"], PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetch();
+        $stmt->close();
     }
 
     #Vista Usuarios
@@ -35,5 +37,6 @@ class Datos extends Conexion {
         $stmt = (new Conexion)->conectar()->prepare("SELECT * FROM $tabla");
         $stmt->execute();
         return $stmt->fetchAll();
+        $stmt->close();
     }
 }
