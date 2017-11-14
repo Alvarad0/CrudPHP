@@ -20,6 +20,7 @@ if(!$_SESSION["validar"]){
         <?php
             $ingresar = new MvcController();
             $ingresar->vistaUsuarioController();
+            $ingresar->eliminarUsuarioController();
         ?>
 		</tbody>
 	</table>

@@ -63,4 +63,16 @@ class Datos extends Conexion {
         }
         $stmt->close();
     }
+
+    #Eliminar usuario
+    public function eliminarUsuarioModel($datosModel, $tabla){
+        $stmt = (new Conexion)->conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
+        $stmt->bindParam(":id", $datosModel, PDO::PARAM_INT);
+        if ($stmt->execute()){
+            return "success";
+        }else{
+            return "Error";
+        }
+        $stmt->close();
+    }
 }
