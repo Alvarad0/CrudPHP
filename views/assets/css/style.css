@@ -50,6 +50,9 @@ section form input{
     width:95%;
     margin:5px;
 }
+section form input#userRegistro{
+    text-transform: lowercase;
+}
 
 section form input[type="submit"]{
     position:relative;

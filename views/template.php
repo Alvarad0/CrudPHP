@@ -13,5 +13,6 @@
     $mvc -> enlacesPaginasController();
  ?>
 </section>
+<script src="views/assets/js/validarFormulario.js"></script>
 </body>
 </html>
