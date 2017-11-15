@@ -49,10 +49,25 @@ class MvcController
                 //var_dump($respuesta);
                 session_start();
                 $_SESSION["validar"] = true;
-                if ($respuesta["usuario"] == $_POST["usuarioLogin"] && $respuesta["password"] == $encriptar) {
-                    header("location:index.php?action=usuarios");
+                $intentos = $respuesta["intentos"];
+                $usaurioActual = $_POST["usuarioLogin"];
+                if($intentos < 2){
+                    if ($respuesta["usuario"] == $_POST["usuarioLogin"] && $respuesta["password"] == $encriptar) {
+                        header("location:index.php?action=usuarios");
+                        $intentos = 0;
+                        $datosIntentos = array("usuarioActual" => $usaurioActual, "intentos" => $intentos);
+                        $respuestaIntentos = (new Datos)->usuariosIntentosModel($datosIntentos, "usuarios");
+                    }else{
+                        ++$intentos;
+                        $datosIntentos = array("usuarioActual" => $usaurioActual, "intentos" => $intentos);
+                        $respuestaIntentos = (new Datos)->usuariosIntentosModel($datosIntentos, "usuarios");
+                        header("location:index.php?action=fallo");
+                    }
                 }else{
-                    header("location:index.php?action=fallo");
+                    $intentos = 0;
+                    $datosIntentos = array("usuarioActual" => $usaurioActual, "intentos" => $intentos);
+                    $respuestaIntentos = (new Datos)->usuariosIntentosModel($datosIntentos, "usuarios");
+                    header("location:index.php?action=falloIntentos");
                 }
             }
         }
@@ -121,6 +136,4 @@ class MvcController
         }
     }
 }
-
-
 ?>

@@ -16,6 +16,9 @@ class Paginas{
         else if ($enlaces == "cambio"){
             $module = "views/modules/usuarios.php";
         }
+        else if ($enlaces == "falloIntentos"){
+            $module = "views/modules/ingresar.php";
+        }
 		else{
 			$module =  "views/modules/registro.php";
 		}

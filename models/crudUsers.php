@@ -25,7 +25,7 @@ class Datos extends Conexion {
 
     #Ingreso Usuario
     public function ingresoUsuarioModel($datosModel, $tabla){
-        $stmt = (new Conexion)->conectar()->prepare("SELECT usuario, password FROM $tabla WHERE  usuario = :usuario");
+        $stmt = (new Conexion)->conectar()->prepare("SELECT usuario, password, intentos FROM $tabla WHERE  usuario = :usuario");
         $stmt->bindParam(":usuario", $datosModel["usuario"], PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetch();
@@ -74,5 +74,17 @@ class Datos extends Conexion {
             return "Error";
         }
         $stmt->close();
+    }
+
+    #Intentos de Inicio de Sesion
+    public function usuariosIntentosModel($datosModel, $tabla){
+        $stmt = (new Conexion)->conectar()->prepare("UPDATE $tabla SET intentos = :intentos WHERE usuario = :usuarioActual");
+        $stmt->bindParam(":intentos", $datosModel["intentos"], PDO::PARAM_INT);
+        $stmt->bindParam(":usuarioActual", $datosModel["usuarioActual"], PDO::PARAM_STR);
+        if($stmt->execute()){
+            return "success";
+        }else{
+            return "Error";
+        }
     }
 }

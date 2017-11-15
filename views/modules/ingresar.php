@@ -12,6 +12,9 @@ if (isset($_GET["action"])) {
     if ($_GET["action"] == "fallo") {
         echo "Usuario ó Contraseña Incorrectos";
     }
+    if($_GET["action"] == "falloIntentos"){
+        echo "Favor de completar el Catchap";
+    }
     exit();
 }
 ?>
