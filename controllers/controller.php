@@ -23,12 +23,17 @@ class MvcController
     #Registro de Usuarios
     public function registroUsuariosController(){
         if(isset($_POST["usuario"])){
-            $datosController = array("usuario" => $_POST["usuario"],"password" => $_POST["password"],"email" => $_POST["email"]);
-            $respuesta = (new Datos)->registroUsuarioModel($datosController, "usuarios");
-            if($respuesta == "Success"){
-                header("location:index.php?action=ok");
-            }else{
-                header("location:index.php");
+            if(preg_match('/^[a-zA-Z0-9]*$/', $_POST["usuario"])
+            && preg_match('/^[a-zA-Z0-9]*$/', $_POST["password"])
+            && preg_match('/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i', $_POST["email"])){
+                $encriptar = crypt($_POST["password"], '$2a$07$vA56XAP1LFV0KoALTbzPbui8j3uW6bcXwAKTs0Mc6gwOxjb.SaUSS');
+                $datosController = array("usuario" => $_POST["usuario"],"password" => $encriptar,"email" => $_POST["email"]);
+                $respuesta = (new Datos)->registroUsuarioModel($datosController, "usuarios");
+                if($respuesta == "Success"){
+                    header("location:index.php?action=ok");
+                }else{
+                    header("location:index.php");
+                }
             }
         }
     }
@@ -36,17 +41,20 @@ class MvcController
     #Ingreso de Usuarios
     public function ingresoUsuarioController(){
         if (isset($_POST["usuarioLogin"])) {
-            $datosController = array("usuario" => $_POST["usuarioLogin"], "password" => $_POST["passwordLogin"]);
-            $respuesta = (new Datos)->ingresoUsuarioModel($datosController, "usuarios");
-            //var_dump($respuesta);
-            session_start();
-            $_SESSION["validar"] = true;
-            if ($respuesta["usuario"] == $_POST["usuarioLogin"] && $respuesta["password"] == $_POST["passwordLogin"]) {
-                header("location:index.php?action=usuarios");
-            }else{
-                header("location:index.php?action=fallo");
+            if(preg_match('/^[a-zA-Z0-9]*$/', $_POST["usuarioLogin"])
+            && preg_match('/^[a-zA-Z0-9]*$/', $_POST["passwordLogin"])){
+                $encriptar = crypt($_POST["passwordLogin"], '$2a$07$vA56XAP1LFV0KoALTbzPbui8j3uW6bcXwAKTs0Mc6gwOxjb.SaUSS');
+                $datosController = array("usuario" => $_POST["usuarioLogin"], "password" => $encriptar);
+                $respuesta = (new Datos)->ingresoUsuarioModel($datosController, "usuarios");
+                //var_dump($respuesta);
+                session_start();
+                $_SESSION["validar"] = true;
+                if ($respuesta["usuario"] == $_POST["usuarioLogin"] && $respuesta["password"] == $encriptar) {
+                    header("location:index.php?action=usuarios");
+                }else{
+                    header("location:index.php?action=fallo");
+                }
             }
-
         }
     }
 
@@ -81,16 +89,21 @@ class MvcController
     #Actualizar Usuario
     public function actualizarUsuarioController(){
         if (isset($_POST["usuarioEditar"])) {
-            $datosController = array(
-                "id" => $_POST["idEditar"],
-                "usuario" => $_POST["usuarioEditar"],
-                "password" => $_POST["passwordEditar"],
-                "email" => $_POST["emailEditar"]);
-            $respuesta = (new Datos)->actualizarusuarioModel($datosController, "usuarios");
-            if ($respuesta == "success") {
-                header("location: index.php?action=cambio");
-            }else{
-                echo "Error";
+            if(preg_match('/^[a-zA-Z0-9]*$/', $_POST["usuarioEditar"])
+            && preg_match('/^[a-zA-Z0-9]*$/', $_POST["passwordEditar"])
+            && preg_match('/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i', $_POST["emailEditar"])){
+                $encriptar = crypt($_POST["passwordEditar"], '$2a$07$vA56XAP1LFV0KoALTbzPbui8j3uW6bcXwAKTs0Mc6gwOxjb.SaUSS');
+                $datosController = array(
+                    "id" => $_POST["idEditar"],
+                    "usuario" => $_POST["usuarioEditar"],
+                    "password" => $encriptar,
+                    "email" => $_POST["emailEditar"]);
+                $respuesta = (new Datos)->actualizarusuarioModel($datosController, "usuarios");
+                if ($respuesta == "success") {
+                    header("location: index.php?action=cambio");
+                }else{
+                    echo "Error";
+                }
             }
         }
     }

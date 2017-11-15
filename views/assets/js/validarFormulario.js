@@ -3,6 +3,7 @@ function validarRegistro(){
     var usuario = document.querySelector("#userRegistro").value;
     var password = document.querySelector("#pwRegistro").value;
     var email = document.querySelector("#eRegistro").value;
+    var terminos = document.querySelector("#terminos").checked;
     /*console.log('usuario: ', usuario);
     console.log('password: ', password);
     console.log('email: ', email);*/
