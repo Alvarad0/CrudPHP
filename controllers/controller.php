@@ -30,7 +30,7 @@ class MvcController
                 $datosController = array("usuario" => $_POST["usuario"],"password" => $encriptar,"email" => $_POST["email"]);
                 $respuesta = (new Datos)->registroUsuarioModel($datosController, "usuarios");
                 if($respuesta == "Success"){
-                    header("location:index.php?action=ok");
+                    header("location:ok");
                 }else{
                     header("location:index.php");
                 }
@@ -53,7 +53,7 @@ class MvcController
                 $usaurioActual = $_POST["usuarioLogin"];
                 if($intentos < 2){
                     if ($respuesta["usuario"] == $_POST["usuarioLogin"] && $respuesta["password"] == $encriptar) {
-                        header("location:index.php?action=usuarios");
+                        header("location:usuarios");
                         $intentos = 0;
                         $datosIntentos = array("usuarioActual" => $usaurioActual, "intentos" => $intentos);
                         $respuestaIntentos = (new Datos)->usuariosIntentosModel($datosIntentos, "usuarios");
@@ -61,13 +61,13 @@ class MvcController
                         ++$intentos;
                         $datosIntentos = array("usuarioActual" => $usaurioActual, "intentos" => $intentos);
                         $respuestaIntentos = (new Datos)->usuariosIntentosModel($datosIntentos, "usuarios");
-                        header("location:index.php?action=fallo");
+                        header("location:fallo");
                     }
                 }else{
                     $intentos = 0;
                     $datosIntentos = array("usuarioActual" => $usaurioActual, "intentos" => $intentos);
                     $respuestaIntentos = (new Datos)->usuariosIntentosModel($datosIntentos, "usuarios");
-                    header("location:index.php?action=falloIntentos");
+                    header("location:falloIntentos");
                 }
             }
         }
@@ -115,7 +115,7 @@ class MvcController
                     "email" => $_POST["emailEditar"]);
                 $respuesta = (new Datos)->actualizarusuarioModel($datosController, "usuarios");
                 if ($respuesta == "success") {
-                    header("location: index.php?action=cambio");
+                    header("location:cambio");
                 }else{
                     echo "Error";
                 }
@@ -129,11 +129,10 @@ class MvcController
             $datosController = $_GET["idBorrar"];
             $respuesta = (new Datos)->eliminarUsuarioModel($datosController, "usuarios");
             if($respuesta == "success"){
-                header("location:index.php?action=usuarios");
+                header("location:usuarios");
             }else{
                 echo "Error";
             }
         }
     }
 }
-?>

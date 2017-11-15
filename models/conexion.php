@@ -15,4 +15,3 @@ class Conexion{
 }
 /*$a = new Conexion();
 $a->conectar();*/
-
