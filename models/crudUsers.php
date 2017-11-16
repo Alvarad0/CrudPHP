@@ -87,4 +87,13 @@ class Datos extends Conexion {
             return "Error";
         }
     }
+
+    #Validar Usuaio Existente
+    public function validarUsuarioModel($datosModel, $tabla){
+        $stmt = (new Conexion)->conectar()->prepare("SELECT usuario FROM $tabla WHERE usuario = :usuario");
+        $stmt->bindParam(":usuario", $datosModel, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetch();
+        $stmt->close();
+    }
 }
